@@ -323,7 +323,7 @@ function Processing({ jobId, onDone, onFail }: { jobId: string | null; onDone: (
         <Loader2 className="relative h-12 w-12 animate-spin text-primary-foreground" />
       </div>
       <h2 className="mt-10 font-display text-2xl font-bold">Your voice is becoming something bigger.</h2>
-      <p className="mt-3 min-h-6 text-glow">{jobId ? (step ? `${step[0].toUpperCase()}${step.slice(1)}` : STAGES[stage]) : "Sending your audio…"}</p>
+      <p className="mt-3 min-h-6 text-glow">{jobId ? (step ? step.charAt(0).toUpperCase() + step.slice(1) : STAGES[stage]) : "Sending your audio…"}</p>
       {progress != null && (
         <div className="mt-6 h-2 w-full overflow-hidden rounded-full bg-muted"><div className="h-full transition-all" style={{ width: `${progress}%`, backgroundImage: "var(--gradient-voice)" }} /></div>
       )}
