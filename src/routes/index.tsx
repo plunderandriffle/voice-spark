@@ -163,7 +163,7 @@ function Recorder({ onDone }: { onDone: (a: Audio) => void }) {
     const color = getComputedStyle(c).color;
     ctx.fillStyle = color;
     for (let i = 0; i < bars; i++) {
-      const v = Math.abs(data[Math.floor((i / bars) * data.length)] - 128) / 128;
+      const v = Math.abs((data[Math.floor((i / bars) * data.length)] ?? 128) - 128) / 128;
       const h = Math.max(4, v * c.height * 1.6);
       ctx.fillRect(i * w + 2, (c.height - h) / 2, w - 4, h);
     }
@@ -243,14 +243,14 @@ function Recorder({ onDone }: { onDone: (a: Audio) => void }) {
 function Uploader({ onDone }: { onDone: (a: Audio) => void }) {
   const [drag, setDrag] = useState(false);
   const input = useRef<HTMLInputElement>(null);
-  const handle = async (f?: File) => {
+  const handle = async (f?: File): Promise<void> => {
     if (!f) return;
-    if (!/\.mp3$/i.test(f.name) && f.type !== "audio/mpeg") return toast.error("Please choose an MP3 file.");
-    if (f.size > MAX_BYTES) return toast.error("That file is over 24 MB.");
+    if (!/\.mp3$/i.test(f.name) && f.type !== "audio/mpeg") { toast.error("Please choose an MP3 file.");
+    if (f.size > MAX_BYTES) { toast.error("That file is over 24 MB.");
     const url = URL.createObjectURL(f);
     try {
       const d = await getDuration(url);
-      if (d > MAX_SECONDS + 0.5) { URL.revokeObjectURL(url); return toast.error(`That's ${fmt(d)} long — keep it to 60 seconds.`); }
+      if (d > MAX_SECONDS + 0.5) { URL.revokeObjectURL(url); { toast.error(`That's ${fmt(d)} long — keep it to 60 seconds.`); }
       onDone({ blob: f, url, name: f.name.replace(/\.mp3$/i, ""), duration: d });
     } catch { URL.revokeObjectURL(url); toast.error("We couldn't read that audio file."); }
   };

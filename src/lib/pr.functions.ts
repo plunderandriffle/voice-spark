@@ -38,7 +38,7 @@ async function callTool(name: string, args: Record<string, unknown>) {
     }
   }
   if (result.isError) throw new Error(data?.error ?? data?.message ?? contentText ?? "Generation failed");
-  return data as Record<string, any>;
+  return data as any;
 }
 
 function pickJobId(d: any): string | undefined {
