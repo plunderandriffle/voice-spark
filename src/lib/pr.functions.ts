@@ -18,7 +18,7 @@ async function callTool(name: string, args: Record<string, unknown>) {
   // SSE transport: take the last data: line
   if (text.trimStart().startsWith("event:") || text.includes("\ndata:") || text.startsWith("data:")) {
     const lines = text.split("\n").filter((l) => l.startsWith("data:"));
-    text = lines.length ? lines[lines.length - 1].slice(5).trim() : text;
+    text = lines.at(-1)?.slice(5).trim() ?? text;
   }
   let msg: any;
   try {
